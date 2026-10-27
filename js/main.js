@@ -18,12 +18,24 @@
       C.UI.init();
       C.Boot.init();
       C.Home.init();
+      if (C.Entertainment && C.Entertainment.init) C.Entertainment.init();
       C.Library.init();
       C.Settings.init();
       C.Router.init();
       this._bindKeys();
+      this._registerServiceWorker();
       this._exposeApi();
       this._start();
+    },
+
+    /** PWA only — never on Tizen (CSP forbids inline scripts; .wgt has no sw.js). */
+    _registerServiceWorker() {
+      const onTizen =
+        (C.Tizen && C.Tizen.isTizen) || typeof global.tizen !== "undefined";
+      if (onTizen || !("serviceWorker" in navigator)) return;
+      global.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js").catch(() => {});
+      });
     },
 
     _start() {
@@ -72,7 +84,7 @@
       C.Storage.set({ firstRunDone: true });
       setTimeout(() => {
         C.UI.toast(
-          "Tip: ↑↓←→ navigate · Enter open · Esc back · F favorite in All Apps",
+          "Tip: Entertainment hub for movies & sports · Esc back · F favorite in All Apps",
           { ms: 5200 }
         );
       }, 600);
@@ -81,7 +93,7 @@
     replayBoot() {
       if (C.Boot.isRunning()) return;
       // Hide other views during boot
-      ["home", "library", "settings"].forEach((id) => {
+      ["home", "entertainment", "library", "settings"].forEach((id) => {
         const el = document.getElementById(id);
         if (el) {
           el.hidden = true;
@@ -143,6 +155,8 @@
 
           const view = C.Router.view;
           if (view === "home" && C.Home) C.Home.handleKey(e);
+          else if (view === "entertainment" && C.Entertainment)
+            C.Entertainment.handleKey(e);
           else if (view === "library" && C.Library) C.Library.handleKey(e);
           else if (view === "settings" && C.Settings) C.Settings.handleKey(e);
         },
@@ -151,8 +165,9 @@
     },
 
     _handleTizenBack(forceExit) {
+      // From Library / Settings (or any non-home view): always return to Chula Home
       if (C.Router.view !== "home") {
-        C.Router.back();
+        C.Router.go("home", {}, { replace: true });
         this._backExitArmed = false;
         return;
       }

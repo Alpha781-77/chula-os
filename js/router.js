@@ -1,5 +1,5 @@
 /**
- * Chula OS — view router (home | library | settings)
+ * Chula OS — view router (home | entertainment | library | settings)
  * Boot runs once per session unless forced; not on every navigation.
  */
 (function (global) {
@@ -27,7 +27,7 @@
           if (k) params[decodeURIComponent(k)] = decodeURIComponent(v || "");
         });
       }
-      if (["home", "library", "settings"].includes(view)) {
+      if (["home", "entertainment", "library", "settings"].includes(view)) {
         this.go(view, params, { silentHash: true });
       }
     },
@@ -80,6 +80,7 @@
     _render() {
       const views = {
         home: document.getElementById("home"),
+        entertainment: document.getElementById("entertainment"),
         library: document.getElementById("library"),
         settings: document.getElementById("settings"),
       };
@@ -93,6 +94,7 @@
       });
 
       if (this.view === "home" && C.Home) C.Home.onEnter();
+      if (this.view === "entertainment" && C.Entertainment) C.Entertainment.onEnter(this._params);
       if (this.view === "library" && C.Library) C.Library.onEnter(this._params);
       if (this.view === "settings" && C.Settings) C.Settings.onEnter(this._params);
 

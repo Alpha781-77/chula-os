@@ -87,11 +87,18 @@
             const fav = C.Storage.isFavorite(app.id)
               ? '<span class="app-card__fav" aria-label="Favorite">★</span>'
               : "";
+            const caution =
+              app.trust === "caution"
+                ? '<span class="app-card__caution" aria-label="Caution">Caution</span>'
+                : "";
+            const cardClass =
+              "app-card glass" + (app.trust === "caution" ? " app-card--caution" : "");
             return (
-              `<button type="button" class="app-card glass" data-app="${app.id}" data-label="${C.UI.escape(app.name)}">` +
+              `<button type="button" class="${cardClass}" data-app="${app.id}" data-label="${C.UI.escape(app.name)}">` +
               `<span class="app-card__icon" aria-hidden="true">${app.icon}</span>` +
               `<span class="app-card__name">${C.UI.escape(app.name)}</span>` +
               `<span class="app-card__meta">${C.UI.escape(app.category)}</span>` +
+              caution +
               fav +
               `</button>`
             );
@@ -258,7 +265,7 @@
             return true;
           }
           e.preventDefault();
-          C.Router.back();
+          C.Router.go("home", {}, { replace: true });
           return true;
         case "Home":
         case "BrowserHome":

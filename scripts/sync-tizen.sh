@@ -7,13 +7,13 @@ TIZEN="$ROOT/tizen/ChulaOS"
 echo "==> Syncing Chula OS → Tizen project"
 mkdir -p "$TIZEN/js" "$TIZEN/assets/fonts" "$TIZEN/icons"
 
-# Core web UI
+# Core web UI (no inline scripts — CSP-safe for Tizen)
 cp "$ROOT/index.html" "$TIZEN/index.html"
 cp "$ROOT/styles.css" "$TIZEN/styles.css"
 cp "$ROOT/styles-app.css" "$TIZEN/styles-app.css"
 
 # JS modules (including Tizen bridge)
-for f in config storage registry tizen-bridge ui launcher router boot home library settings main; do
+for f in config storage registry tizen-bridge ui launcher router boot home entertainment library settings main; do
   cp "$ROOT/js/${f}.js" "$TIZEN/js/${f}.js"
 done
 
@@ -24,30 +24,22 @@ cp "$ROOT/assets/fonts/"*.woff2 "$TIZEN/assets/fonts/"
 cp "$ROOT/icons/icon-192.png" "$TIZEN/icons/icon-192.png"
 cp "$ROOT/icons/icon-512.png" "$TIZEN/icons/icon-512.png"
 
-# Ensure Tizen does not depend on PWA service worker / web manifest
+# Ensure Tizen does not ship PWA service worker / web manifest
 rm -f "$TIZEN/sw.js" "$TIZEN/manifest.webmanifest"
 
-# Strip service-worker registration from Tizen index (belt-and-suspenders)
-python3 - <<'PY'
-from pathlib import Path
-p = Path("/Applications/Chula Os/tizen/ChulaOS/index.html")
-text = p.read_text(encoding="utf-8")
-# Force-disable SW block on Tizen package copy
-text = text.replace(
-    'var isTizen = typeof tizen !== "undefined";',
-    'var isTizen = true; // packaged Tizen build — never register SW',
-)
-p.write_text(text, encoding="utf-8")
-print("patched index.html for Tizen (SW disabled)")
-PY
-
-# Require config.xml
+# Require config.xml + icons
 if [[ ! -f "$TIZEN/config.xml" ]]; then
   echo "ERROR: missing config.xml"
   exit 1
 fi
 if [[ ! -f "$TIZEN/icon.png" ]]; then
   echo "ERROR: missing icon.png"
+  exit 1
+fi
+
+# Guard: reject accidental inline <script> blocks (CSP script-src 'self')
+if grep -qE '<script[[:space:]]*>' "$TIZEN/index.html"; then
+  echo "ERROR: inline <script> found in Tizen index.html — forbidden by CSP"
   exit 1
 fi
 

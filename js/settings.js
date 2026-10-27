@@ -110,7 +110,8 @@
             `<h2 class="settings-title">Startup</h2>` +
             this._toggleRow("skipBoot", "Skip boot animation after first launch this session", prefs.skipBoot) +
             `<button type="button" class="btn glass" id="replay-boot">Replay boot animation now</button>` +
-            `<button type="button" class="btn glass" id="reset-firstrun">Show first-run tips again</button>`;
+            `<button type="button" class="btn glass" id="reset-firstrun">Show first-run tips again</button>` +
+            `<p class="settings-note">On Samsung Tizen, Chula OS is a normal app. It cannot replace Smart Hub or intercept the TV Home button. Open Chula OS from Apps after using other services. Background keep-alive is currently disabled in the Tizen package (trade-off: cleaner exits; resume depends on the TV keeping the app in memory).</p>`;
           break;
         case "datetime":
           html =
@@ -148,7 +149,7 @@
                     : "";
                 })()
               : "") +
-            `<p class="settings-note">Chula OS is a Smart TV home launcher. It does not replace Samsung Smart Hub or TV firmware. On Tizen it installs as a normal .wgt application.</p>` +
+            `<p class="settings-note">Chula OS is a Smart TV home launcher. It does not replace Samsung Smart Hub or TV firmware. On Tizen it installs as a normal .wgt application. See docs/tizen/LAUNCHER_CAPABILITIES.md for supported vs unsupported behavior.</p>` +
             `</div>` +
             `<button type="button" class="btn glass btn--danger" id="reset-prefs">Reset all Chula OS preferences</button>`;
           break;
@@ -384,7 +385,7 @@
         case "Backspace":
         case "BrowserBack":
           e.preventDefault();
-          C.Router.back();
+          C.Router.go("home", {}, { replace: true });
           return true;
         case "Home":
         case "BrowserHome":

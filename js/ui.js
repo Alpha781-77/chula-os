@@ -89,6 +89,100 @@
       });
     },
 
+    /**
+     * Caution external destinations — user must confirm. Default focus = stay in Chula OS.
+     * No auto-redirect loops; does not suppress browser warnings.
+     * @returns {Promise<boolean>} true if user continues
+     */
+    confirmCautionLaunch(app) {
+      return new Promise((resolve) => {
+        if (!this.overlayEl) {
+          resolve(false);
+          return;
+        }
+        const name = (app && app.name) || "this site";
+        this.overlayEl.innerHTML =
+          '<div class="overlay__card glass overlay__card--caution" role="dialog" aria-modal="true" aria-labelledby="caution-title">' +
+          '<p class="overlay__eyebrow">External · not trusted</p>' +
+          '<p class="overlay__title" id="caution-title">' +
+          this.escape(name) +
+          "</p>" +
+          '<p class="overlay__sub">Security tools may flag this destination. Chula OS cannot detect or block redirects, ads, or downloads inside the TV browser. Browser warnings are not suppressed.</p>' +
+          '<p class="overlay__sub">Back returns to Chula OS if the app is still running. Prefer Apps → Chula OS if not.</p>' +
+          '<div class="overlay__actions">' +
+          '<button type="button" class="btn glass overlay__btn is-focused" data-caution="cancel">Stay in Chula OS</button>' +
+          '<button type="button" class="btn glass overlay__btn" data-caution="continue">Continue anyway</button>' +
+          "</div></div>";
+        this.overlayEl.hidden = false;
+        this.overlayEl.classList.add("is-shown");
+
+        const buttons = Array.from(
+          this.overlayEl.querySelectorAll("[data-caution]")
+        );
+        let focusIdx = 0; // safer default: cancel
+
+        const sync = () => {
+          buttons.forEach((b, i) => {
+            b.classList.toggle("is-focused", i === focusIdx);
+            b.tabIndex = i === focusIdx ? 0 : -1;
+          });
+          if (buttons[focusIdx]) buttons[focusIdx].focus({ preventScroll: true });
+        };
+
+        const finish = (ok) => {
+          document.removeEventListener("keydown", onKey, true);
+          buttons.forEach((b) => b.removeEventListener("click", onClick));
+          this.hideOverlay();
+          resolve(!!ok);
+        };
+
+        const onClick = (e) => {
+          const act = e.currentTarget.getAttribute("data-caution");
+          finish(act === "continue");
+        };
+
+        const onKey = (e) => {
+          const code = e.keyCode;
+          if (
+            e.key === "Escape" ||
+            e.key === "Backspace" ||
+            e.key === "BrowserBack" ||
+            code === 10009 ||
+            code === 10182
+          ) {
+            e.preventDefault();
+            e.stopPropagation();
+            finish(false);
+            return;
+          }
+          if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+            e.preventDefault();
+            focusIdx = (focusIdx + buttons.length - 1) % buttons.length;
+            sync();
+            return;
+          }
+          if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+            e.preventDefault();
+            focusIdx = (focusIdx + 1) % buttons.length;
+            sync();
+            return;
+          }
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            e.stopPropagation();
+            const act = buttons[focusIdx]
+              ? buttons[focusIdx].getAttribute("data-caution")
+              : "cancel";
+            finish(act === "continue");
+          }
+        };
+
+        buttons.forEach((b) => b.addEventListener("click", onClick));
+        document.addEventListener("keydown", onKey, true);
+        sync();
+      });
+    },
+
     hideOverlay() {
       if (!this.overlayEl) return;
       this.overlayEl.classList.remove("is-shown");

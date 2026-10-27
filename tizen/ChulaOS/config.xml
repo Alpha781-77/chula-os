@@ -28,6 +28,7 @@
   <!-- Privileges: only what Chula OS actually uses -->
   <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/>
   <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+  <tizen:privilege name="http://tizen.org/privilege/application.info"/>
   <tizen:privilege name="http://tizen.org/privilege/internet"/>
   <tizen:privilege name="http://developer.samsung.com/privilege/network.public"/>
   <tizen:privilege name="http://developer.samsung.com/privilege/productinfo"/>
@@ -37,6 +38,8 @@
   <feature name="http://tizen.org/feature/tv.inputdevice"/>
 
   <tizen:profile name="tv-samsung"/>
+  <!-- background-support stays disable: cleaner process exits; resume relies on TV memory.
+       Enabling it would need a separate justified test (may keep Chula alive after launching others). -->
   <tizen:setting screen-orientation="landscape"
                  context-menu="disable"
                  background-support="disable"
@@ -44,7 +47,7 @@
                  install-location="auto"
                  hwkey-event="enable"/>
 
-  <!-- Meta: check network on launch; do not claim Smart Hub replacement -->
+  <!-- Network check on launch; Chula OS is a normal installed app only (not Smart Hub) -->
   <tizen:metadata key="http://samsung.com/tv/metadata/use.network" value="true"/>
   <tizen:metadata key="http://samsung.com/tv/metadata/prelaunch.support" value="false"/>
 

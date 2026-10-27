@@ -81,6 +81,18 @@
       </footer>
     </main>
 
+    <!-- Entertainment hub -->
+    <section id="entertainment" class="entertainment view" hidden aria-hidden="true">
+      <div class="view__bg" aria-hidden="true"></div>
+      <header class="view__header">
+        <button type="button" class="btn-back glass" id="entertainment-back" aria-label="Back to home">← Home</button>
+        <h2 class="view__title">Entertainment</h2>
+      </header>
+      <p class="hub-intro">Movies, sports, and external sites — native apps when installed, official HTTPS otherwise.</p>
+      <div id="entertainment-body" class="hub-body" aria-label="Entertainment categories"></div>
+      <p class="view__hint">↑ ↓ ← → Navigate · Enter open · Esc back</p>
+    </section>
+
     <!-- All Apps library -->
     <section id="library" class="library view" hidden aria-hidden="true">
       <div class="view__bg" aria-hidden="true"></div>
@@ -121,19 +133,9 @@
   <script src="js/router.js"></script>
   <script src="js/boot.js"></script>
   <script src="js/home.js"></script>
+  <script src="js/entertainment.js"></script>
   <script src="js/library.js"></script>
   <script src="js/settings.js"></script>
   <script src="js/main.js"></script>
-  <script>
-    // Service workers are for the browser/PWA build only — not relied on for Tizen .wgt
-    (function () {
-      var isTizen = typeof tizen !== "undefined";
-      if (!isTizen && "serviceWorker" in navigator) {
-        window.addEventListener("load", function () {
-          navigator.serviceWorker.register("sw.js").catch(function () {});
-        });
-      }
-    })();
-  </script>
 </body>
 </html>

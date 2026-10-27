@@ -29,6 +29,7 @@ need js/launcher.js
 need js/router.js
 need js/boot.js
 need js/home.js
+need js/entertainment.js
 need js/library.js
 need js/settings.js
 need js/main.js

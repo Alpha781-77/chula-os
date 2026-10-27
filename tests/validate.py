@@ -25,9 +25,11 @@ def main() -> int:
         "EXPERIENCE CHULA OS",
         "Proudly made in Kenya",
         'id="home"',
+        'id="entertainment"',
         'id="library"',
         'id="settings"',
         "js/main.js",
+        "js/entertainment.js",
         "js/tizen-bridge.js",
         "manifest.webmanifest",
     ):
@@ -49,23 +51,30 @@ def main() -> int:
                 fail(f"config.xml missing {needle!r}")
 
     # Home must not permanently brand after boot markup section
-    home = html.split('id="home"', 1)[1].split('id="library"', 1)[0]
+    home = html.split('id="home"', 1)[1].split('id="entertainment"', 1)[0]
     if re.search(r"Chula\s*OS", home):
         fail("Home markup contains Chula OS branding")
 
     registry = (ROOT / "js/registry.js").read_text(encoding="utf-8")
     for app_id in (
+        "entertainment",
         "stremio",
         "youtube",
         "netflix",
         "disney",
         "prime",
         "appletv",
+        "plex",
+        "dstv",
         "iptv",
         "allapps",
+        "cinejoy",
     ):
         if f'id: "{app_id}"' not in registry:
             fail(f"registry missing app {app_id}")
+
+    if "youcine" in registry.lower() and 'id: "youcine"' in registry:
+        fail("registry must not include YouCine tile")
 
     for url in (
         "https://web.stremio.com/",
@@ -74,9 +83,19 @@ def main() -> int:
         "https://www.disneyplus.com/",
         "https://www.primevideo.com/",
         "https://tv.apple.com/",
+        "https://www.plex.tv/",
+        "https://www.dstv.com/en-ke/",
+        "https://cinejoy.pk/",
     ):
         if url not in registry:
             fail(f"registry missing official URL {url}")
+
+    for cat in ("Movies & TV", "Football & Sports", "External Websites"):
+        if cat not in registry:
+            fail(f"registry missing Entertainment category {cat!r}")
+
+    if 'trust: "caution"' not in registry:
+        fail("registry missing caution trust for external sites")
 
     manifest = json.loads((ROOT / "manifest.webmanifest").read_text(encoding="utf-8"))
     if manifest.get("name") != "Chula OS":

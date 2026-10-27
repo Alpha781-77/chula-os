@@ -25,7 +25,7 @@ copy "$ROOT/VERSION" "$DIST/VERSION"
 copy "$ROOT/README.md" "$DIST/README.md"
 copy "$ROOT/docs" "$DIST/docs"
 
-for f in config storage registry tizen-bridge ui launcher router boot home library settings main; do
+for f in config storage registry tizen-bridge ui launcher router boot home entertainment library settings main; do
   copy "$ROOT/js/${f}.js" "$DIST/js/${f}.js"
 done
 

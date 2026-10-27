@@ -1,5 +1,5 @@
 /* Chula OS service worker — cache shell for offline launcher UI */
-const CACHE = "chulaos-v1.0.0";
+const CACHE = "chulaos-v1.0.1-entertainment";
 const ASSETS = [
   "./",
   "./index.html",
@@ -16,6 +16,7 @@ const ASSETS = [
   "./js/router.js",
   "./js/boot.js",
   "./js/home.js",
+  "./js/entertainment.js",
   "./js/library.js",
   "./js/settings.js",
   "./js/main.js",
