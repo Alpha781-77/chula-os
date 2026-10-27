@@ -23,6 +23,7 @@ need VERSION
 need js/config.js
 need js/storage.js
 need js/registry.js
+need js/tizen-bridge.js
 need js/ui.js
 need js/launcher.js
 need js/router.js
@@ -35,6 +36,8 @@ need assets/wallpaper.jpg
 need assets/wallpaper.svg
 need icons/icon-192.png
 need icons/icon-512.png
+need tizen/ChulaOS/config.xml
+need docs/tizen/TIZEN_DEPLOYMENT.md
 
 # HTML must load modules (not legacy single app.js as sole entry)
 if ! grep -q 'js/main.js' index.html; then

@@ -10,6 +10,7 @@ const ASSETS = [
   "./js/config.js",
   "./js/storage.js",
   "./js/registry.js",
+  "./js/tizen-bridge.js",
   "./js/ui.js",
   "./js/launcher.js",
   "./js/router.js",

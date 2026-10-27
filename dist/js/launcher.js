@@ -7,6 +7,9 @@
   const C = global.ChulaOS;
 
   function isOnline() {
+    if (C.Tizen && C.Tizen.isTizen && typeof C.Tizen.getNetworkConnected === "function") {
+      return C.Tizen.getNetworkConnected();
+    }
     return navigator.onLine !== false;
   }
 
@@ -80,7 +83,7 @@
         await C.UI.showLaunchOverlay(app.name);
       }
 
-      // Remember return context for when the user comes back via history
+      // Remember return context for when the user comes back via history / app resume
       try {
         sessionStorage.setItem(
           "chulaos.return",
@@ -88,12 +91,20 @@
         );
       } catch (_) {}
 
-      // Prefer same-tab navigation on TV browsers (popup blockers are common)
+      // Samsung Tizen: prefer ApplicationControl / native app IDs
+      if (C.Tizen && C.Tizen.isTizen) {
+        const tizenResult = await C.Tizen.openUrl(href, app);
+        if (C.UI) C.UI.hideOverlay();
+        return tizenResult;
+      }
+
+      // Browser / PWA: same-tab navigation (popup blockers are common on TV browsers)
       try {
         window.location.assign(href);
         return { ok: true, action: "navigate" };
       } catch (err) {
         console.error("[ChulaOS] launch failed", err);
+        if (C.UI) C.UI.hideOverlay();
         return {
           ok: false,
           message: `Could not open ${app.name}. Your browser blocked the navigation.`,

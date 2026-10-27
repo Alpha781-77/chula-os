@@ -57,10 +57,22 @@ python3 -m http.server 8765
 - [ ] **All Apps** search and categories work  
 - [ ] Airplane/offline: launcher still loads from cache; streaming tiles warn correctly  
 
-## F. What this product does *not* do
+## F. Samsung Tizen install (U6000F)
+
+Prefer the native Tizen path documented in [docs/tizen/TIZEN_DEPLOYMENT.md](tizen/TIZEN_DEPLOYMENT.md):
+
+- [ ] Install Tizen Studio + TV Extensions 9.0 + Certificate Extension + JDK  
+- [ ] Create Samsung certificate profile (Author + Distributor with TV DUID)  
+- [ ] Enable Developer Mode on the TV; `sdb connect <TV_IP>`  
+- [ ] `./scripts/package-tizen.sh` → install the **signed** `.wgt`  
+- [ ] Confirm boot, remote navigation, and app launches on the TV  
+
+Until the SDK is installed, only an **UNSIGNED** structural `.wgt` exists and **cannot** be installed on the retail TV.
+
+## G. What this product does *not* do
 
 - [ ] Understood: does not flash TV firmware  
-- [ ] Understood: does not replace Samsung/LG/Android system home permanently unless you manually set the TV’s start app (vendor-specific, optional, on your device)  
+- [ ] Understood: does not replace Smart Hub or permanently intercept the system Home key  
 - [ ] Understood: no pirated streams or cracked APKs are included  
 
 ## If something fails

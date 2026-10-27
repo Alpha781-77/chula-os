@@ -28,10 +28,25 @@ def main() -> int:
         'id="library"',
         'id="settings"',
         "js/main.js",
+        "js/tizen-bridge.js",
         "manifest.webmanifest",
     ):
         if needle not in html:
             fail(f"index.html missing {needle!r}")
+
+    cfg = ROOT / "tizen/ChulaOS/config.xml"
+    if not cfg.exists():
+        fail("missing tizen/ChulaOS/config.xml")
+    else:
+        cfg_text = cfg.read_text(encoding="utf-8")
+        for needle in (
+            "ChulaKenya.ChulaOS",
+            "http://tizen.org/privilege/tv.inputdevice",
+            "http://tizen.org/privilege/application.launch",
+            'profile name="tv-samsung"',
+        ):
+            if needle not in cfg_text:
+                fail(f"config.xml missing {needle!r}")
 
     # Home must not permanently brand after boot markup section
     home = html.split('id="home"', 1)[1].split('id="library"', 1)[0]

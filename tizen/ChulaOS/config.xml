@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Chula OS — Samsung Tizen TV Web Application
+  Target: Samsung Crystal UHD U6000F (2025 lineup → Tizen 9.0 / TV Extension 9.0+)
+  Also compatible with newer Tizen TV platforms that accept Tizen 9.0 web apps.
+-->
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:tizen="http://tizen.org/ns/widgets"
+        id="http://chula.os/tv"
+        version="1.0.0"
+        viewmodes="maximized">
+
+  <tizen:application id="ChulaKenya.ChulaOS"
+                     package="ChulaKenya"
+                     required_version="6.0"/>
+
+  <content src="index.html"/>
+  <name>Chula OS</name>
+  <description>Premium Smart TV home launcher. Proudly made in Kenya.</description>
+  <author href="https://chula.os" email="hello@chula.os">Chula OS</author>
+  <icon src="icon.png"/>
+
+  <!-- Network: allow HTTPS destinations for streaming services -->
+  <access origin="*" subdomains="true"></access>
+  <tizen:allow-navigation>*</tizen:allow-navigation>
+  <tizen:content-security-policy>script-src 'self'; object-src 'none';</tizen:content-security-policy>
+
+  <!-- Privileges: only what Chula OS actually uses -->
+  <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/>
+  <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+  <tizen:privilege name="http://tizen.org/privilege/internet"/>
+  <tizen:privilege name="http://developer.samsung.com/privilege/network.public"/>
+  <tizen:privilege name="http://developer.samsung.com/privilege/productinfo"/>
+
+  <!-- Features for store/device filtering -->
+  <feature name="http://tizen.org/feature/screen.size.normal.1080.1920"/>
+  <feature name="http://tizen.org/feature/tv.inputdevice"/>
+
+  <tizen:profile name="tv-samsung"/>
+  <tizen:setting screen-orientation="landscape"
+                 context-menu="disable"
+                 background-support="disable"
+                 encryption="disable"
+                 install-location="auto"
+                 hwkey-event="enable"/>
+
+  <!-- Meta: check network on launch; do not claim Smart Hub replacement -->
+  <tizen:metadata key="http://samsung.com/tv/metadata/use.network" value="true"/>
+  <tizen:metadata key="http://samsung.com/tv/metadata/prelaunch.support" value="false"/>
+
+</widget>

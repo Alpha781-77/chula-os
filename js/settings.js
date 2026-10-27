@@ -133,8 +133,22 @@
             `<p class="about-origin">${C.CONFIG.origin}</p>` +
             `<div class="settings-row"><span>Version</span><span>${C.CONFIG.version}</span></div>` +
             `<div class="settings-row"><span>Build</span><span>${C.CONFIG.build}</span></div>` +
-            `<div class="settings-row"><span>Platform</span><span>Web TV launcher (PWA)</span></div>` +
-            `<p class="settings-note">Chula OS is a browser-based Smart TV home launcher. It does not replace Samsung Smart Hub, LG webOS, Android TV system UI, or TV firmware.</p>` +
+            `<div class="settings-row"><span>Platform</span><span>${
+              C.Tizen && C.Tizen.isTizen
+                ? "Samsung Tizen TV app"
+                : "Web TV launcher (PWA)"
+            }</span></div>` +
+            (C.Tizen && C.Tizen.isTizen && C.Tizen.getModelHint
+              ? (() => {
+                  const m = C.Tizen.getModelHint();
+                  return m
+                    ? `<div class="settings-row"><span>TV model</span><span>${C.UI.escape(
+                        m.model || "—"
+                      )}</span></div>`
+                    : "";
+                })()
+              : "") +
+            `<p class="settings-note">Chula OS is a Smart TV home launcher. It does not replace Samsung Smart Hub or TV firmware. On Tizen it installs as a normal .wgt application.</p>` +
             `</div>` +
             `<button type="button" class="btn glass btn--danger" id="reset-prefs">Reset all Chula OS preferences</button>`;
           break;

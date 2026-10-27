@@ -115,6 +115,7 @@
   <script src="js/config.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/registry.js"></script>
+  <script src="js/tizen-bridge.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/launcher.js"></script>
   <script src="js/router.js"></script>
@@ -124,11 +125,15 @@
   <script src="js/settings.js"></script>
   <script src="js/main.js"></script>
   <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", function () {
-        navigator.serviceWorker.register("sw.js").catch(function () {});
-      });
-    }
+    // Service workers are for the browser/PWA build only — not relied on for Tizen .wgt
+    (function () {
+      var isTizen = typeof tizen !== "undefined";
+      if (!isTizen && "serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("sw.js").catch(function () {});
+        });
+      }
+    })();
   </script>
 </body>
 </html>

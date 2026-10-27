@@ -26,7 +26,7 @@ Chula OS is **not** a replacement for Samsung Smart Hub, LG webOS Home, Android 
 | **Web TV launcher / PWA** | **Primary — implemented** |
 | Android TV APK | Not generated — requires separate Cordova/Capacitor/Android Studio wrap and a signing key you provide |
 | Custom Linux TV OS image / firmware flash | **Not supported** — unsafe and not implemented |
-| Native Tizen/webOS packaged widget | Possible future packaging of the same `dist/` web assets with vendor SDKs |
+| **Samsung Tizen `.wgt` (U6000F / Tizen 9.0)** | **Project + scripts ready** — signed install blocked until Tizen Studio + certificates + TV Dev Mode are available on this Mac |
 
 The existing codebase is HTML/CSS/vanilla JS. The strongest complete deliverable is therefore a **production web build** you can:
 

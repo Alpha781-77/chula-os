@@ -26,10 +26,13 @@ Production package:
 
 | Target | Support |
 |--------|---------|
-| Smart TV / STB **web browser** + PWA | **Primary** |
+| Smart TV / STB **web browser** + PWA | Supported (`dist/`) |
+| **Samsung Tizen TV** (U6000F / Tizen 9.0) | **Primary hardware target** — see `docs/tizen/TIZEN_DEPLOYMENT.md` |
 | Desktop browser (dev / demo) | Supported |
-| Android TV APK | Not shipped — wrap `dist/` later if needed |
+| Android TV APK | Not shipped |
 | TV firmware / custom OS image | Not supported |
+
+Tizen project: `tizen/ChulaOS/` · package: `./scripts/package-tizen.sh`
 
 ## Features
 

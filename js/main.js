@@ -9,8 +9,12 @@
   let lastKey = "";
 
   const App = {
+    _backExitArmed: false,
+    _backExitTimer: null,
+
     init() {
       C.Storage.load();
+      if (C.Tizen && C.Tizen.init) C.Tizen.init();
       C.UI.init();
       C.Boot.init();
       C.Home.init();
@@ -125,6 +129,18 @@
 
           if (C.Boot.isRunning()) return;
 
+          // Samsung Tizen Back / Exit keyCodes
+          if (
+            C.Tizen &&
+            C.Tizen.isTizen &&
+            (e.keyCode === 10009 || e.keyCode === 10182)
+          ) {
+            e.preventDefault();
+            e.stopPropagation();
+            this._handleTizenBack(e.keyCode === 10182);
+            return;
+          }
+
           const view = C.Router.view;
           if (view === "home" && C.Home) C.Home.handleKey(e);
           else if (view === "library" && C.Library) C.Library.handleKey(e);
@@ -132,6 +148,28 @@
         },
         true
       );
+    },
+
+    _handleTizenBack(forceExit) {
+      if (C.Router.view !== "home") {
+        C.Router.back();
+        this._backExitArmed = false;
+        return;
+      }
+      if (forceExit) {
+        C.Tizen.exitApp();
+        return;
+      }
+      if (this._backExitArmed) {
+        C.Tizen.exitApp();
+        return;
+      }
+      this._backExitArmed = true;
+      C.UI.toast("Press Back again to exit Chula OS", { ms: 2200 });
+      if (this._backExitTimer) clearTimeout(this._backExitTimer);
+      this._backExitTimer = setTimeout(() => {
+        this._backExitArmed = false;
+      }, 2200);
     },
 
     _exposeApi() {
