@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Chula OS — browser prototype of a premium smart-TV home interface." />
+  <title>Chula OS Prototype</title>
+  <link rel="stylesheet" href="styles.css?v=polish5" />
+</head>
+<body>
+  <div id="stage" class="stage">
+  <!-- Boot sequence (branding allowed only here) -->
+  <div id="boot" class="boot" role="dialog" aria-label="Chula OS startup" aria-live="polite">
+    <div class="boot__void" aria-hidden="true"></div>
+    <div class="boot__particles" id="boot-particles" aria-hidden="true"></div>
+    <div class="boot__sweep" aria-hidden="true"></div>
+
+    <div class="boot__stage">
+      <div class="boot__orbit">
+        <svg class="boot__arc" viewBox="0 0 320 320" aria-hidden="true">
+          <circle class="boot__arc-track" cx="160" cy="160" r="128" />
+          <circle class="boot__arc-line" cx="160" cy="160" r="128" />
+        </svg>
+        <div class="boot__bloom boot__bloom--amethyst" aria-hidden="true"></div>
+        <div class="boot__bloom boot__bloom--cyan" aria-hidden="true"></div>
+        <h1 class="boot__wordmark" aria-label="Chula OS">
+          <span class="boot__word">Chula</span>
+          <span class="boot__word boot__word--os">OS</span>
+        </h1>
+      </div>
+
+      <p class="boot__tagline">EXPERIENCE CHULA OS</p>
+      <p class="boot__origin">Proudly made in Kenya 🇰🇪</p>
+
+      <div class="boot__loader" aria-hidden="true">
+        <div class="boot__loader-track">
+          <div class="boot__loader-bar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Home screen (no OS branding) -->
+  <main id="home" class="home" hidden aria-hidden="true">
+    <div class="home__wallpaper" aria-hidden="true"></div>
+    <div class="home__scrim" aria-hidden="true"></div>
+
+    <header class="home__top">
+      <div class="clock" id="clock" aria-live="polite" aria-label="Current time">
+        <time class="clock__time" id="clock-time" datetime="">--:--</time>
+        <span class="clock__date" id="clock-date"></span>
+        <span class="clock__greeting" id="greeting">Good evening</span>
+        <!-- Weather omitted: no live weather data in this offline prototype -->
+      </div>
+
+      <div class="status" role="toolbar" aria-label="System">
+        <button type="button" class="status__btn" data-action="search" data-label="Search" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.75"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+        </button>
+        <button type="button" class="status__btn" data-action="wifi" data-label="Wi-Fi" aria-label="Wi-Fi">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 10.5c4-4 11-4 15 0M7.5 13.5c2.4-2.4 6.6-2.4 9 0M10.5 16.5c1-1 2-1 3 0" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><circle cx="12" cy="19" r="1.25" fill="currentColor"/></svg>
+        </button>
+        <button type="button" class="status__btn" data-action="bluetooth" data-label="Bluetooth" aria-label="Bluetooth">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 7l10 5-5 3.5V4l5 3.5L7 17" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="status__btn" data-action="settings" data-label="Settings" aria-label="Settings">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.75"/><path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2M6.2 6.2l1.4 1.4M16.4 16.4l1.4 1.4M6.2 17.8l1.4-1.4M16.4 7.6l1.4-1.4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <section class="tiles" aria-label="Applications">
+      <button type="button" class="tile glass" data-tile="stremio" data-label="Stremio">
+        <span class="tile__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="currentColor" stroke-width="2"/><path d="M20 16l14 8-14 8V16z" fill="currentColor"/></svg></span>
+        <span class="tile__label">Stremio</span>
+      </button>
+      <button type="button" class="tile glass" data-tile="youtube" data-label="YouTube">
+        <span class="tile__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="24" rx="6" stroke="currentColor" stroke-width="2"/><path d="M21 18l12 6-12 6V18z" fill="currentColor"/></svg></span>
+        <span class="tile__label">YouTube</span>
+      </button>
+      <button type="button" class="tile glass" data-tile="netflix" data-label="Netflix">
+        <span class="tile__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><rect x="10" y="8" width="28" height="32" rx="3" stroke="currentColor" stroke-width="2"/><path d="M18 12v24M30 12v24" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
+        <span class="tile__label">Netflix</span>
+      </button>
+      <button type="button" class="tile glass" data-tile="disney" data-label="Disney+">
+        <span class="tile__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M8 30c6-10 26-10 32 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M14 22c4-6 16-6 20 0M18 16c2.5-3.5 9.5-3.5 12 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="34" r="2" fill="currentColor"/></svg></span>
+        <span class="tile__label">Disney+</span>
+      </button>
+      <button type="button" class="tile glass" data-tile="prime" data-label="Prime Video">
+        <span class="tile__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M10 28c8 8 20 8 28 0" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M16 18h16M20 14v12M28 14v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <span class="tile__label">Prime Video</span>
+      </button>
+      <button type="button" class="tile glass" data-tile="appletv" data-label="Apple TV">
+        <span class="tile__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="24" rx="4" stroke="currentColor" stroke-width="2"/><path d="M24 8v4M18 40h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 20c0-2 1.5-3.5 3.5-3.5S28 18.5 28 20.5 25 26 24 28c-1-2-4-5.5-4-8z" fill="currentColor"/></svg></span>
+        <span class="tile__label">Apple TV</span>
+      </button>
+      <button type="button" class="tile glass" data-tile="iptv" data-label="IPTV">
+        <span class="tile__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="10" width="36" height="24" rx="3" stroke="currentColor" stroke-width="2"/><path d="M16 42h16M24 34v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M14 18h8M14 24h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <span class="tile__label">IPTV</span>
+      </button>
+      <button type="button" class="tile glass" data-tile="allapps" data-label="All Apps">
+        <span class="tile__icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><rect x="10" y="10" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"/><rect x="28" y="10" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"/><rect x="10" y="28" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"/><rect x="28" y="28" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"/></svg></span>
+        <span class="tile__label">All Apps</span>
+      </button>
+    </section>
+
+    <div id="toast" class="toast glass" hidden role="status" aria-live="polite"></div>
+
+    <footer class="home__hint" aria-hidden="true">
+      <span>↑ ↓ ← → Navigate</span>
+      <span>Enter Select</span>
+      <span>Esc Back</span>
+    </footer>
+  </main>
+
+  </div><!-- /#stage -->
+
+  <script src="app.js?v=polish5"></script>
+</body>
+</html>

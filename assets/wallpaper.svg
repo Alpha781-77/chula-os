@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3840 2160" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Mountain lake at amethyst dusk fallback">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#180B35"/>
+      <stop offset="22%" stop-color="#3d1a72"/>
+      <stop offset="48%" stop-color="#7B2CFF" stop-opacity="0.85"/>
+      <stop offset="68%" stop-color="#e87858"/>
+      <stop offset="82%" stop-color="#8a4068"/>
+      <stop offset="100%" stop-color="#12081f"/>
+    </linearGradient>
+    <linearGradient id="peak" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f2f6ff"/>
+      <stop offset="22%" stop-color="#c8d0e8"/>
+      <stop offset="55%" stop-color="#5a5478"/>
+      <stop offset="100%" stop-color="#1a1430"/>
+    </linearGradient>
+    <linearGradient id="lake" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5a2870"/>
+      <stop offset="35%" stop-color="#2a1848"/>
+      <stop offset="100%" stop-color="#030308"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="72%" cy="40%" r="28%">
+      <stop offset="0%" stop-color="#ffc49a" stop-opacity="0.85"/>
+      <stop offset="35%" stop-color="#7B2CFF" stop-opacity="0.35"/>
+      <stop offset="100%" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="3840" height="2160" fill="url(#sky)"/>
+  <ellipse cx="2760" cy="860" rx="980" ry="520" fill="url(#sun)"/>
+  <path d="M0 1280 L360 920 L680 1120 L1040 640 L1440 1000 L1840 560 L2280 960 L2720 520 L3160 900 L3520 680 L3840 1120 L3840 1440 L0 1440 Z" fill="#22183a" opacity="0.9"/>
+  <path d="M0 1360 L400 1000 L800 1200 L1200 760 L1640 1120 L2080 720 L2520 1080 L2960 640 L3400 1000 L3840 840 L3840 1520 L0 1520 Z" fill="url(#peak)"/>
+  <path d="M0 1440 L3840 1440 L3840 2160 L0 2160 Z" fill="url(#lake)"/>
+  <path d="M0 1440 L3840 1440 L3840 1720 L0 1760 Z" fill="#7B2CFF" opacity="0.12"/>
+  <ellipse cx="1920" cy="1760" rx="1400" ry="80" fill="#00E5FF" opacity="0.06"/>
+</svg>
