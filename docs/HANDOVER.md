@@ -4,7 +4,7 @@
 **Version:** 1.0.0  
 **Date:** 2026-10-27  
 **Architecture:** Browser-based Smart TV launcher (Progressive Web App)  
-**Branch:** `delivery/production-launcher`
+**Branch:** `main`
 
 ## What Chula OS is
 
@@ -26,7 +26,7 @@ Chula OS is **not** a replacement for Samsung Smart Hub, LG webOS Home, Android 
 | **Web TV launcher / PWA** | **Primary — implemented** |
 | Android TV APK | Not generated — requires separate Cordova/Capacitor/Android Studio wrap and a signing key you provide |
 | Custom Linux TV OS image / firmware flash | **Not supported** — unsafe and not implemented |
-| **Samsung Tizen `.wgt` (U6000F / Tizen 9.0)** | **Project + scripts ready** — signed install blocked until Tizen Studio + certificates + TV Dev Mode are available on this Mac |
+| **Samsung Tizen `.wgt` (Tizen 9.0 / `tv-samsung`)** | **Project + scripts ready.** Signed widgets, signature XML, and device identifiers are local packaging output and are not committed. On-device verification is the checklist in `docs/tizen/VERIFY_ON_DEVICE.md` and is not recorded as complete in this repository. |
 
 The existing codebase is HTML/CSS/vanilla JS. The strongest complete deliverable is therefore a **production web build** you can:
 
@@ -52,14 +52,14 @@ The existing codebase is HTML/CSS/vanilla JS. The strongest complete deliverable
 ## Build & validate
 
 ```bash
-cd "/Applications/Chula Os"
+# from the repository root
 ./scripts/validate.sh
 ./scripts/build.sh
 ```
 
-Artifacts:
+Artifacts (generated locally, not committed):
 
-- `dist/` — production folder to host or copy  
+- `dist/` — production folder to host or copy. Recreate with `./scripts/build.sh`  
 - `dist/chula-os-1.0.0-web.zip` — release zip  
 
 ## Install on a TV (your remaining work)

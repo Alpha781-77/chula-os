@@ -12,7 +12,7 @@ Use this list when you are ready to put Chula OS on your television.
 ## A. Build on this computer (already done if `dist/` exists)
 
 ```bash
-cd "/Applications/Chula Os"
+# from the repository root
 ./scripts/validate.sh
 ./scripts/build.sh
 ```
@@ -24,7 +24,7 @@ cd "/Applications/Chula Os"
 **Option 1 — quick LAN serve from the Mac**
 
 ```bash
-cd "/Applications/Chula Os/dist"
+cd dist
 python3 -m http.server 8765
 ```
 
