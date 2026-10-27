@@ -1,5 +1,7 @@
 # Chula OS
 
+[![Validate](https://github.com/Alpha781-77/chula-os/actions/workflows/validate.yml/badge.svg)](https://github.com/Alpha781-77/chula-os/actions/workflows/validate.yml)
+
 **Version 1.0.0** — a remote-friendly Smart TV home launcher for the browser and for Samsung Tizen.  
 Proudly made in Kenya.
 
@@ -123,7 +125,7 @@ Open [http://localhost:8765/](http://localhost:8765/). Fullscreen is closer to a
 
 | Command | Result |
 |---------|--------|
-| `validate.sh` | Required files, JavaScript syntax, and `tests/validate.py` |
+| `validate.sh` | Required files, JavaScript syntax, and `tests/validate.py`. Uses `node --check` when Node.js is installed, otherwise a brace-balance fallback |
 | `build.sh` | `dist/` and `dist/chula-os-1.0.0-web.zip` |
 | `sync-tizen.sh` | Refreshes web files inside `tizen/ChulaOS/` |
 | `verify-tizen-project.sh` | Offline structure, privileges, CSP, and remote key codes |
@@ -133,6 +135,8 @@ Open [http://localhost:8765/](http://localhost:8765/). Fullscreen is closer to a
 | `deploy-tizen.sh` | Connects to a TV you name. Not part of validation |
 
 Host the web build from `dist/` (`python3 -m http.server 8765` inside that directory) or copy it to any static host the TV can reach. Installation notes: [docs/INSTALL.md](docs/INSTALL.md). Tizen setup: [docs/tizen/TIZEN_DEPLOYMENT.md](docs/tizen/TIZEN_DEPLOYMENT.md).
+
+GitHub Actions runs `validate.sh` (with Node.js), `verify-tizen-project.sh`, and `build.sh` on pushes and pull requests to `main`. That workflow does not sign a package, connect to a television, or read certificates. See [Contributing](CONTRIBUTING.md).
 
 ## Samsung Tizen compatibility and limitations
 
@@ -188,6 +192,8 @@ On 27 October 2026 the maintainer machine reported:
 
 Re-run the project scripts after changes. A later SDK probe can fail on a machine without Tizen Studio even when the web app is fine. Do not treat the table above as a device pass.
 
+Those three commands were run again on this Mac after the GitHub Actions workflow was added. Validation and Tizen verification still exited 0, and `node --check` still did not run because Node.js is not installed. `./scripts/build.sh` exited 0 and wrote a gitignored `dist/`. Packaging, signing, and installation on a television were not run.
+
 ## Known issues
 
 - Third-party widgets cannot permanently replace Smart Hub or capture the television Home key.
@@ -218,6 +224,7 @@ Re-run the project scripts after changes. A later SDK probe can fail on a machin
 - [Launcher capabilities](docs/tizen/LAUNCHER_CAPABILITIES.md)
 - [Entertainment Hub](docs/tizen/ENTERTAINMENT_HUB.md)
 - [On-device verification](docs/tizen/VERIFY_ON_DEVICE.md)
+- [Contributing](CONTRIBUTING.md)
 
 ## Credits
 
@@ -230,6 +237,6 @@ Maintained by [Alpha781-77](https://github.com/Alpha781-77).
 
 This repository is the source for that project. It does not list employment, certifications, or a device-test record.
 
-## License note
+## License
 
-No license file is included yet. Streaming services are opened at their official websites. Viewers need their own subscriptions. Chula OS does not redistribute proprietary applications, DRM circumvention tools, or unauthorized IPTV playlists.
+No `LICENSE` file is included. The wallpaper is a third-party Unsplash photograph and Space Grotesk is distributed under the SIL Open Font License, so one repository-wide license was not added on the maintainer’s behalf. Streaming services are opened at their official websites. Viewers need their own subscriptions. Chula OS does not redistribute proprietary applications, DRM circumvention tools, or unauthorized IPTV playlists.
