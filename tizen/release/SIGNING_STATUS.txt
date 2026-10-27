@@ -1,5 +1,0 @@
-STATUS=UNSIGNED
-artifact=chula-os-1.0.0-tizen-UNSIGNED.wgt
-reason=Tizen Studio CLI and/or Samsung certificate profile not available on this Mac
-installable_on_tv=NO
-next_steps=Install Tizen Studio + TV Extensions 9.0 + Certificate Extension; create Distributor+Author certs; enable Dev Mode on the U6000F; then re-run ./scripts/package-tizen.sh

@@ -1,0 +1,35 @@
+# macOS / editor noise
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# Local environment and secrets
+.env
+.env.*
+*.local
+*.p12
+*.pem
+*.key
+*.keystore
+*.jks
+
+# Generated web build. Recreate with ./scripts/build.sh
+dist/
+
+# Tizen Studio packaging output and signing material
+tizen/release/
+tizen/ChulaOS/*.wgt
+tizen/ChulaOS/author-signature.xml
+tizen/ChulaOS/signature*.xml
+tizen/ChulaOS/.manifest.tmp
+tizen/ChulaOS/.settings/
+tizen/ChulaOS/.buildResult/
+tizen/ChulaOS/.sdk_delta.info
+tizen/ChulaOS/.sign/
+
+# Private research, downloaded apps, and device dumps
+research/
+*.apk
+*.apks

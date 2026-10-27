@@ -1,3 +1,0 @@
-Chula OS 1.0.0
-platform: web-tv-launcher (PWA)
-built: 2026-10-27T10:29:47Z
