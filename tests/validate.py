@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+"""Static validation for Chula OS production launcher."""
+from __future__ import annotations
+
+import json
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+errors: list[str] = []
+
+
+def fail(msg: str) -> None:
+    errors.append(msg)
+
+
+def main() -> int:
+    version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+    if not re.fullmatch(r"\d+\.\d+\.\d+", version):
+        fail(f"VERSION invalid: {version!r}")
+
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
+    for needle in (
+        "EXPERIENCE CHULA OS",
+        "Proudly made in Kenya",
+        'id="home"',
+        'id="library"',
+        'id="settings"',
+        "js/main.js",
+        "manifest.webmanifest",
+    ):
+        if needle not in html:
+            fail(f"index.html missing {needle!r}")
+
+    # Home must not permanently brand after boot markup section
+    home = html.split('id="home"', 1)[1].split('id="library"', 1)[0]
+    if re.search(r"Chula\s*OS", home):
+        fail("Home markup contains Chula OS branding")
+
+    registry = (ROOT / "js/registry.js").read_text(encoding="utf-8")
+    for app_id in (
+        "stremio",
+        "youtube",
+        "netflix",
+        "disney",
+        "prime",
+        "appletv",
+        "iptv",
+        "allapps",
+    ):
+        if f'id: "{app_id}"' not in registry:
+            fail(f"registry missing app {app_id}")
+
+    for url in (
+        "https://web.stremio.com/",
+        "https://www.youtube.com/tv",
+        "https://www.netflix.com/",
+        "https://www.disneyplus.com/",
+        "https://www.primevideo.com/",
+        "https://tv.apple.com/",
+    ):
+        if url not in registry:
+            fail(f"registry missing official URL {url}")
+
+    manifest = json.loads((ROOT / "manifest.webmanifest").read_text(encoding="utf-8"))
+    if manifest.get("name") != "Chula OS":
+        fail("manifest name mismatch")
+    if manifest.get("display") not in {"fullscreen", "standalone", "minimal-ui"}:
+        fail("manifest display unsuitable for TV")
+
+    # Ensure no hardcoded secrets
+    for path in (ROOT / "js").glob("*.js"):
+        text = path.read_text(encoding="utf-8")
+        if re.search(r"(api[_-]?key|secret|password)\s*[:=]\s*['\"][^'\"]+['\"]", text, re.I):
+            fail(f"possible secret in {path.name}")
+
+    wallpaper = ROOT / "assets/wallpaper.jpg"
+    if wallpaper.stat().st_size < 200_000:
+        fail("wallpaper.jpg unexpectedly small")
+
+    if errors:
+        print("TEST FAILURES:")
+        for e in errors:
+            print(" -", e)
+        return 1
+
+    print("tests/validate.py OK")
+    print("version", version)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

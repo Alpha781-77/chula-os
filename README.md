@@ -1,87 +1,87 @@
-# Chula OS — Browser Prototype
+# Chula OS
 
-A lightweight **browser prototype** of a premium smart-TV home interface (16:9, up to 4K). Plain HTML, CSS, and vanilla JavaScript — no build step, no backend, no required network at runtime.
+**Version 1.0.0** — Premium Smart TV home launcher (web / PWA).  
+**Proudly made in Kenya 🇰🇪**
 
-> **Important:** This is a front-end UI demo only. It does **not** replace Samsung Smart Hub, does **not** modify TV firmware or the TV boot logo, and does **not** install or control real apps. Tiles and status icons are visual prototypes only.
+Chula OS is a cinematic, remote-friendly TV home experience that launches official streaming web destinations and keeps your preferences on-device. It is **not** a firmware replacement for Samsung, LG, Android TV, or other TV operating systems.
 
-## Run locally
+## Quick start
 
 ```bash
 cd "/Applications/Chula Os"
+./scripts/validate.sh
+python3 -m http.server 8765
 ```
 
-Then either:
+Open [http://localhost:8765/](http://localhost:8765/) (fullscreen recommended).
 
-1. **Double-click** `index.html`, or  
-2. Serve the folder:
+Production package:
 
-   ```bash
-   python3 -m http.server 8765
-   ```
+```bash
+./scripts/build.sh
+# → dist/ and dist/chula-os-1.0.0-web.zip
+```
 
-   Open [http://localhost:8765/](http://localhost:8765/)
+## Platform
 
-Fullscreen (**F11**) on a 16:9 display looks best.
+| Target | Support |
+|--------|---------|
+| Smart TV / STB **web browser** + PWA | **Primary** |
+| Desktop browser (dev / demo) | Supported |
+| Android TV APK | Not shipped — wrap `dist/` later if needed |
+| TV firmware / custom OS image | Not supported |
 
-## Boot sequence
+## Features
 
-1. Jet-black screen (`#030308`)  
-2. Electric-cyan light sweep reveals the **Chula OS** wordmark  
-3. Royal-amethyst arc traces around the logo with cyan edge light  
-4. **EXPERIENCE CHULA OS**  
-5. **Proudly made in Kenya 🇰🇪**  
-6. Cyan/violet loading bar  
-7. Fade into the home screen  
+- Boot animation with Chula OS branding, then home (no branding on home)  
+- Home: clock, greeting, network badge, status controls, streaming tiles  
+- Launches: Stremio, YouTube TV, Netflix, Disney+, Prime Video, Apple TV+, configurable IPTV URL  
+- All Apps library: search, categories, recent, favorites  
+- Settings: display, sound, apps, startup, clock, accessibility, about  
+- Persistent preferences (`localStorage`)  
+- Offline launcher shell (service worker)  
+- D-pad / keyboard navigation  
 
-OS branding appears **only** during boot.
+## Controls
 
-## Home screen
-
-- Local cinematic mountain-lake wallpaper (Unsplash photo + SVG fallback)  
-- Large clock / date (upper-left); no fake weather (offline prototype)  
-- Search, Wi-Fi, Bluetooth, Settings icons (upper-right)  
-- App tiles: Stremio, YouTube, Netflix, Disney+, Prime Video, Apple TV, IPTV, All Apps  
-- Cyan + amethyst focus ring for remote-style navigation  
-
-## Demo: replay startup
-
-| Method | How |
-|--------|-----|
-| Keyboard | **`R`** |
-| URL | `index.html?boot=1` or `#demo` |
-| Console | `ChulaOS.replayBoot()` |
-
-## Keyboard / remote
-
-| Key | Action |
-|-----|--------|
-| ← → ↑ ↓ | Move focus (tiles ↔ status icons) |
+| Input | Action |
+|-------|--------|
+| Arrow keys | Move focus |
 | Enter / Space | Select |
-| Escape / Backspace | Dismiss toast / return focus to tiles |
-| R | Replay boot |
+| Esc / Backspace | Back |
+| Home | Return to home (where supported) |
+| F (in All Apps) | Toggle favorite |
+| Ctrl/Cmd+Shift+R | Replay boot (demo) |
+| `?boot=1` | Force boot on load |
 
-## Project structure
+## Project layout
 
 ```
-Chula Os/
 ├── index.html
-├── styles.css
-├── app.js
-├── assets/
-│   ├── wallpaper.jpg          # Local Unsplash photo (optimized ~2560px)
-│   ├── wallpaper.svg          # Gradient fallback
-│   └── fonts/                 # Space Grotesk (self-hosted)
-└── README.md
+├── styles.css / styles-app.css
+├── js/                 # modular launcher
+├── assets/             # wallpaper + fonts
+├── icons/              # PWA icons
+├── manifest.webmanifest
+├── sw.js
+├── scripts/build.sh
+├── scripts/validate.sh
+├── tests/validate.py
+├── docs/HANDOVER.md
+├── docs/INSTALL.md
+└── dist/               # created by build.sh
 ```
 
-## Assets & credits
+## Documentation
 
-- **Wallpaper:** [Nunzio Guerrera / Unsplash](https://unsplash.com/photos/a-mountain-range-is-reflected-in-a-lake-gHZa4S4Fhfo) — Vermilion Lakes, Banff at sunset (snow peaks, lake reflection). Free under the [Unsplash License](https://unsplash.com/license). Stored locally at **3840×2160** with an amethyst/indigo color grade.  
-- **Font:** [Space Grotesk](https://fonts.google.com/specimen/Space+Grotesk) — self-hosted woff2 files (no runtime CDN).
+- [Installation checklist](docs/INSTALL.md)  
+- [Handover report](docs/HANDOVER.md)  
 
-## Scope limits
+## Credits
 
-- Browser UI prototype only  
-- No Smart Hub / firmware integration  
-- No live weather, Wi-Fi, or app launches  
-- App tiles do not open real applications  
+- Wallpaper: [Nunzio Guerrera / Unsplash](https://unsplash.com/photos/a-mountain-range-is-reflected-in-a-lake-gHZa4S4Fhfo) (Unsplash License)  
+- Font: Space Grotesk (self-hosted)  
+
+## License note
+
+Streaming services are opened at their official websites. You need your own subscriptions. Chula OS does not redistribute proprietary apps, DRM circumvention tools, or unauthorized IPTV playlists.
